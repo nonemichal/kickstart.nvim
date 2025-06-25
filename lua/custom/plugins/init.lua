@@ -3,82 +3,106 @@
 --
 -- See the kickstart.nvim README for more information
 
-vim.g.have_nerd_font = true
 vim.o.relativenumber = true
 vim.o.tabstop = 4
 vim.o.shiftwidth = 4
 vim.o.expandtab = true
 
-require 'kickstart.plugins.debug'
-require 'kickstart.plugins.autopairs'
-require 'kickstart.plugins.gitsigns'
-
 return {
   {
     'neovim/nvim-lspconfig',
-    opts = function(_, opts)
-      opts.servers = opts.servers or {}
-
-      local my_servers = {
-        ['arduino-language-server'] = {},
-        ['asm-lsp'] = {},
-        ['bash-language-server'] = {},
-        basedpyright = {},
-        ['basics-language-server'] = {},
-        clangd = {},
-        ['cmake-language-server'] = {},
-        ['docker-compose-language-service'] = {},
-        ['dockerfile-language-server'] = {},
-        ['gh-actions-language-server'] = {},
-        ['json-lsp'] = {},
-        ['language-server-bitbake'] = {},
-        ['lua-language-server'] = {},
-        marksman = {},
-        ['rust-analyzer'] = {},
-        taplo = {},
-        yamlls = {},
-        ['wasm-language-tools'] = {},
-        ['yaml-language-server'] = {},
-      }
-
-      for name, config in pairs(my_servers) do
-        opts.servers[name] = opts.servers[name] or config
-      end
-
-      return opts
-    end,
-  },
-
-  {
-    'WhoIsSethDaniel/mason-tool-installer.nvim',
-    opts = function(_, opts)
-      opts.ensure_installed = opts.ensure_installed or {}
-
-      vim.list_extend(opts.ensure_installed, {
-        'actionlint',
-        'asmfmt',
-        'checkmake',
-        'clang-format',
-        'cmakelang',
-        'codespell',
-        'cpplint',
-        'gitleaks',
-        'gitlint',
-        'hadolint',
-        'isort',
-        'jsonlint',
-        'luacheck',
-        'markdownlint',
-        'oelint-adv',
-        'ruff',
-        'shellcheck',
-        'shfmt',
-        'stylua',
-        'yamlfmt',
-        'yamllint',
-      })
-
-      return opts
+    dependencies = {
+      'williamboman/mason-lspconfig.nvim',
+      'WhoIsSethDaniel/mason-tool-installer.nvim',
+      'stevearc/conform.nvim',
+    },
+    opts = {},
+    config = function()
+    local servers = {
+      ['arduino-language-server'] = {},
+      ['asm-lsp'] = {},
+      ['bash-language-server'] = {},
+      basedpyright = {},
+      ['basics-language-server'] = {},
+      clangd = {},
+      ['cmake-language-server'] = {},
+      ['docker-compose-language-service'] = {},
+      ['dockerfile-language-server'] = {},
+      ['gh-actions-language-server'] = {},
+      ['json-lsp'] = {},
+      ['language-server-bitbake'] = {},
+      ['lua-language-server'] = {},
+      marksman = {},
+      ['rust-analyzer'] = {},
+      taplo = {},
+      yamlls = {},
+      ['wasm-language-tools'] = {},
+      ['yaml-language-server'] = {},
+    }
+    
+    local ensure_installed = vim.tbl_keys(servers or {})
+    vim.list_extend(ensure_installed, {
+      'actionlint',
+      'asmfmt',
+      'checkmake',
+      'clang-format',
+      'cmakelang',
+      'codespell',
+      'cpplint',
+      'gitleaks',
+      'gitlint',
+      'hadolint',
+      'isort',
+      'jsonlint',
+      'luacheck',
+      'markdownlint',
+      'oelint-adv',
+      'ruff',
+      'shellcheck',
+      'shfmt',
+      'stylua',
+      'yamlfmt',
+      'yamllint',
+    })
+    
+    local my_formatters = {
+      lua = { 'stylua' },
+      python = { 'isort', 'ruff' },
+      cpp = { 'clang-format' },
+      c = { 'clang-format' },
+      cmake = { 'cmakelang' },
+      markdown = { 'markdownlint' },
+      sh = { 'shfmt' },
+      wasm = { 'wasm-language-tools' },
+      yaml = { 'yamlfmt' },
+    }
+    vim.list_extend(ensure_installed, my_formatters)
+    
+    local my_daps = {
+      'bash-debug-adapter',
+      'codelldb',
+      'cortex-debug',
+      'debugpy',
+      'local-lua-debugger-vscode',
+    }
+    vim.list_extend(ensure_installed, my_daps)
+    
+    require('mason-tool-installer').setup {
+      ensure_installed = ensure_installed,
+    }
+    
+    local capabilities = vim.lsp.protocol.make_client_capabilities()
+    require('mason-lspconfig').setup {
+      ensure_installed = {},
+      automatic_installation = false,
+      handlers = {
+        function(server_name)
+        local server = servers[server_name] or {}
+        server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
+        require('lspconfig')[server_name].setup(server)
+        end,
+      },
+    }
     end,
   },
 
@@ -86,24 +110,7 @@ return {
     'stevearc/conform.nvim',
     opts = function(_, opts)
       opts.format_on_save = false
-      opts.formatters_by_ft = opts.formatters_by_ft or {}
-
-      local my_formatters = {
-        lua = { 'stylua' },
-        python = { 'isort', 'ruff' },
-        cpp = { 'clang-format' },
-        c = { 'clang-format' },
-        cmake = { 'cmakelang' },
-        markdown = { 'markdownlint' },
-        sh = { 'shfmt' },
-        wasm = { 'wasm-language-tools' },
-        yaml = { 'yamlfmt' },
-      }
-
-      for ft, formatters in pairs(my_formatters) do
-        opts.formatters_by_ft[ft] = formatters
-      end
-
+      
       return opts
     end,
   },
