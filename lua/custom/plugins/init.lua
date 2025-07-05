@@ -11,6 +11,7 @@ vim.o.expandtab = true
 return {
   {
     'neovim/nvim-lspconfig',
+    cmd = { "Mason", "MasonInstall", "MasonUpdate" },
     dependencies = {
       'williamboman/mason-lspconfig.nvim',
       'WhoIsSethDaniel/mason-tool-installer.nvim',
