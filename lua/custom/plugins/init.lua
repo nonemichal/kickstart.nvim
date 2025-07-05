@@ -18,101 +18,91 @@ return {
     },
     opts = {},
     config = function()
-    local servers = {
-      ['arduino-language-server'] = {},
-      ['asm-lsp'] = {},
-      ['bash-language-server'] = {},
-      basedpyright = {},
-      ['basics-language-server'] = {},
-      clangd = {},
-      ['cmake-language-server'] = {},
-      ['docker-compose-language-service'] = {},
-      ['dockerfile-language-server'] = {},
-      ['gh-actions-language-server'] = {},
-      ['json-lsp'] = {},
-      ['language-server-bitbake'] = {},
-      ['lua-language-server'] = {},
-      marksman = {},
-      ['rust-analyzer'] = {},
-      taplo = {},
-      yamlls = {},
-      ['wasm-language-tools'] = {},
-      ['yaml-language-server'] = {},
-    }
-    
-    local ensure_installed = vim.tbl_keys(servers or {})
-    vim.list_extend(ensure_installed, {
-      'actionlint',
-      'asmfmt',
-      'checkmake',
-      'clang-format',
-      'cmakelang',
-      'codespell',
-      'cpplint',
-      'gitleaks',
-      'gitlint',
-      'hadolint',
-      'isort',
-      'jsonlint',
-      'luacheck',
-      'markdownlint',
-      'oelint-adv',
-      'ruff',
-      'shellcheck',
-      'shfmt',
-      'stylua',
-      'yamlfmt',
-      'yamllint',
-    })
-    
-    local my_formatters = {
-      lua = { 'stylua' },
-      python = { 'isort', 'ruff' },
-      cpp = { 'clang-format' },
-      c = { 'clang-format' },
-      cmake = { 'cmakelang' },
-      markdown = { 'markdownlint' },
-      sh = { 'shfmt' },
-      wasm = { 'wasm-language-tools' },
-      yaml = { 'yamlfmt' },
-    }
-    vim.list_extend(ensure_installed, my_formatters)
-    
-    local my_daps = {
-      'bash-debug-adapter',
-      'codelldb',
-      'cortex-debug',
-      'debugpy',
-      'local-lua-debugger-vscode',
-    }
-    vim.list_extend(ensure_installed, my_daps)
-    
-    require('mason-tool-installer').setup {
-      ensure_installed = ensure_installed,
-    }
-    
-    local capabilities = vim.lsp.protocol.make_client_capabilities()
-    require('mason-lspconfig').setup {
-      ensure_installed = {},
-      automatic_installation = false,
-      handlers = {
-        function(server_name)
-        local server = servers[server_name] or {}
-        server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
-        require('lspconfig')[server_name].setup(server)
-        end,
-      },
-    }
-    end,
-  },
+      local servers = {
+        ['arduino-language-server'] = {},
+        ['asm-lsp'] = {},
+        ['bash-language-server'] = {},
+        basedpyright = {},
+        ['basics-language-server'] = {},
+        clangd = {},
+        ['cmake-language-server'] = {},
+        ['docker-compose-language-service'] = {},
+        ['dockerfile-language-server'] = {},
+        ['gh-actions-language-server'] = {},
+        ['json-lsp'] = {},
+        ['language-server-bitbake'] = {},
+        ['lua-language-server'] = {},
+        marksman = {},
+        ['rust-analyzer'] = {},
+        taplo = {},
+        yamlls = {},
+        ['wasm-language-tools'] = {},
+        ['yaml-language-server'] = {},
+      }
 
-  {
-    'stevearc/conform.nvim',
-    opts = function(_, opts)
-      opts.format_on_save = false
-      
-      return opts
+      local ensure_installed = vim.tbl_keys(servers or {})
+      vim.list_extend(ensure_installed, {
+        'actionlint',
+        'asmfmt',
+        'checkmake',
+        'clang-format',
+        'cmakelang',
+        'codespell',
+        'cpplint',
+        'gitleaks',
+        'gitlint',
+        'hadolint',
+        'isort',
+        'jsonlint',
+        'luacheck',
+        'markdownlint',
+        'oelint-adv',
+        'ruff',
+        'shellcheck',
+        'shfmt',
+        'stylua',
+        'yamlfmt',
+        'yamllint',
+      })
+
+      local my_formatters = {
+        lua = { 'stylua' },
+        python = { 'isort', 'ruff' },
+        cpp = { 'clang-format' },
+        c = { 'clang-format' },
+        cmake = { 'cmakelang' },
+        markdown = { 'markdownlint' },
+        sh = { 'shfmt' },
+        wasm = { 'wasm-language-tools' },
+        yaml = { 'yamlfmt' },
+      }
+      vim.list_extend(ensure_installed, my_formatters)
+
+      local my_daps = {
+        'bash-debug-adapter',
+        'codelldb',
+        'cortex-debug',
+        'debugpy',
+        'local-lua-debugger-vscode',
+      }
+      vim.list_extend(ensure_installed, my_daps)
+
+      require('mason-tool-installer').setup {
+        ensure_installed = ensure_installed,
+      }
+
+      local capabilities = vim.lsp.protocol.make_client_capabilities()
+      require('mason-lspconfig').setup {
+        ensure_installed = {},
+        automatic_installation = false,
+        handlers = {
+          function(server_name)
+            local server = servers[server_name] or {}
+            server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
+            require('lspconfig')[server_name].setup(server)
+          end,
+        },
+      }
     end,
   },
 }
-
