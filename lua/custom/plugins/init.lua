@@ -11,8 +11,9 @@ vim.o.expandtab = true
 return {
   {
     'neovim/nvim-lspconfig',
-    cmd = { "Mason", "MasonInstall", "MasonUpdate" },
-    event = { "BufReadPre", "BufNewFile" },
+    -- comment it to install plugins below
+    event = { 'BufReadPre', 'BufNewFile' },
+
     dependencies = {
       'williamboman/mason-lspconfig.nvim',
       'WhoIsSethDaniel/mason-tool-installer.nvim',
@@ -95,8 +96,7 @@ return {
 
       local capabilities = vim.lsp.protocol.make_client_capabilities()
       require('mason-lspconfig').setup {
-        ensure_installed = {},
-        automatic_installation = false,
+        automatic_installation = true,
         handlers = {
           function(server_name)
             local server = servers[server_name] or {}
@@ -105,6 +105,13 @@ return {
           end,
         },
       }
+    end,
+  },
+
+  {
+    'nmac427/guess-indent.nvim',
+    config = function()
+      require('guess-indent').setup {}
     end,
   },
 }
