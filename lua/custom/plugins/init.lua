@@ -25,19 +25,26 @@ return {
         ['arduino-language-server'] = {},
         ['asm-lsp'] = {},
         ['bash-language-server'] = {},
-        basedpyright = {},
+        -- basedpyright = {},
         ['basics-language-server'] = {},
         clangd = {},
         ['cmake-language-server'] = {},
         ['docker-compose-language-service'] = {},
         ['dockerfile-language-server'] = {},
+        ['fish-lsp'] = {},
         ['gh-actions-language-server'] = {},
+        ['html-lsp'] = {},
+        ['htmx-lsp'] = {},
         ['json-lsp'] = {},
         ['language-server-bitbake'] = {},
         ['lua-language-server'] = {},
         marksman = {},
         ['rust-analyzer'] = {},
+        ['systemd-language-server'] = {},
         taplo = {},
+        ['typescript-language-server'] = {},
+        ['typos-lsp'] = {},
+        ['uv'] = {},
         yamlls = {},
         ['wasm-language-tools'] = {},
         ['yaml-language-server'] = {},
@@ -47,6 +54,7 @@ return {
       vim.list_extend(ensure_installed, {
         'actionlint',
         'asmfmt',
+        'api-linter',
         'checkmake',
         'clang-format',
         'cmakelang',
@@ -55,7 +63,7 @@ return {
         'gitleaks',
         'gitlint',
         'hadolint',
-        'isort',
+        'htmlhint',
         'jsonlint',
         'luacheck',
         'markdownlint',
@@ -64,13 +72,15 @@ return {
         'shellcheck',
         'shfmt',
         'stylua',
+        'systemdlint',
         'yamlfmt',
         'yamllint',
+        'qmlls',
       })
 
       local my_formatters = {
         lua = { 'stylua' },
-        python = { 'isort', 'ruff' },
+        python = { 'ruff' },
         cpp = { 'clang-format' },
         c = { 'clang-format' },
         cmake = { 'cmakelang' },
@@ -78,6 +88,7 @@ return {
         sh = { 'shfmt' },
         wasm = { 'wasm-language-tools' },
         yaml = { 'yamlfmt' },
+        html = { 'htmlbeautifier' },
       }
       vim.list_extend(ensure_installed, my_formatters)
 
@@ -86,6 +97,7 @@ return {
         'codelldb',
         'cortex-debug',
         'debugpy',
+        'js-debug-adapter',
         'local-lua-debugger-vscode',
       }
       vim.list_extend(ensure_installed, my_daps)
