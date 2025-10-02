@@ -56,7 +56,6 @@ return {
         'asmfmt',
         'api-linter',
         'checkmake',
-        'clang-format',
         'cmakelang',
         'codespell',
         'cpplint',
@@ -81,8 +80,6 @@ return {
       local my_formatters = {
         lua = { 'stylua' },
         python = { 'ruff' },
-        cpp = { 'clang-format' },
-        c = { 'clang-format' },
         cmake = { 'cmakelang' },
         markdown = { 'markdownlint' },
         sh = { 'shfmt' },
