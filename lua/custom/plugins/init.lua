@@ -44,7 +44,7 @@ return {
         taplo = {},
         ['typescript-language-server'] = {},
         ['typos-lsp'] = {},
-        ['uv'] = {},
+        -- ['uv'] = {},
         yamlls = {},
         ['wasm-language-tools'] = {},
         ['yaml-language-server'] = {},
