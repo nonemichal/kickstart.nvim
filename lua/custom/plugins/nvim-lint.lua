@@ -9,10 +9,11 @@ return {
       api = { 'api-linter' },
       bash = { 'shellcheck', 'shfmt' },
       bitbake = { 'oelint-adv' },
-      c = { 'cpplint' },
-      cmake = { 'cmakelang' },
-      cpp = { 'cpplint' },
+      c = { 'cpplint', 'cppcheck' },
+      cmake = { 'cmake_lint' },
+      cpp = { 'cpplint', 'cppcheck' },
       docker = { 'hadolint' },
+      fish = { 'fish' },
       git = { 'gitlint' },
       hadolint = { 'hadolint' },
       html = { 'htmlhint' },
@@ -24,14 +25,18 @@ return {
       systemd = { 'systemdlint' },
       webassembly = { 'wasm-language-tools' },
       yaml = { 'yamllint', 'actionlint' },
-      ['*'] = { 'codespell', 'gitleaks', '' },
     }
 
-    -- Automatically run linters on file save
-    -- vim.api.nvim_create_autocmd({ 'BufWritePost' }, {
-    --   callback = function()
-    --     lint.try_lint()
-    --   end,
-    -- })
+    vim.api.nvim_create_autocmd({ 'BufWritePost' }, {
+      callback = function()
+        -- try_lint without arguments runs the linters defined in `linters_by_ft`
+        -- for the current filetype
+        require('lint').try_lint()
+
+        -- You can call `try_lint` with a linter name or a list of names to always
+        -- run specific linters, independent of the `linters_by_ft` configuration
+        require('lint').try_lint 'codespell'
+      end,
+    })
   end,
 }
