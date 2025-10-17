@@ -716,13 +716,6 @@ require('lazy').setup({
       local ensure_installed = require 'custom.plugins.ensure-installed'
       require('mason-tool-installer').setup { ensure_installed = ensure_installed, run_on_start = false }
 
-      vim.api.nvim_create_autocmd('BufWinEnter', {
-        pattern = 'Mason',
-        callback = function()
-          require('mason-tool-installer').check_install(true)
-        end,
-      })
-
       require('mason-lspconfig').setup {
         ensure_installed = {}, -- explicitly set to an empty table (Kickstart populates installs via mason-tool-installer)
         automatic_installation = false,
