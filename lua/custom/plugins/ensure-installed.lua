@@ -28,7 +28,9 @@ local servers = {
   ['wasm-language-tools'] = {},
   ['yaml-language-server'] = {},
 }
-vim.list_extend(ensure_installed, servers)
+for name, _ in pairs(servers) do
+  table.insert(ensure_installed, name)
+end
 
 local linters = {
   'actionlint',
@@ -67,7 +69,9 @@ local formatters = {
   yaml = { 'yamlfmt' },
   html = { 'htmlbeautifier' },
 }
-vim.list_extend(ensure_installed, formatters)
+for _, tools in pairs(formatters) do
+  vim.list_extend(ensure_installed, tools)
+end
 
 local daps = {
   ['bash-debug-adapter'] = {},
@@ -77,6 +81,8 @@ local daps = {
   ['js-debug-adapter'] = {},
   ['local-lua-debugger-vscode'] = {},
 }
-vim.list_extend(ensure_installed, daps)
+for name, _ in pairs(daps) do
+  table.insert(ensure_installed, name)
+end
 
 return ensure_installed

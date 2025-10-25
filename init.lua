@@ -713,7 +713,8 @@ require('lazy').setup({
       --
       -- You can add other tools here that you want Mason to install
       -- for you, so that they are available from within Neovim.
-      local ensure_installed = require 'custom.plugins.ensure-installed'
+      -- local ensure_installed = require 'custom.plugins.ensure-installed'
+      local ensure_installed = {}
       require('mason-tool-installer').setup { ensure_installed = ensure_installed, run_on_start = false }
 
       require('mason-lspconfig').setup {
@@ -988,6 +989,7 @@ require('lazy').setup({
   -- In normal mode type `<space>sh` then write `lazy.nvim-plugin`
   -- you can continue same window with `<space>sr` which resumes last telescope search
 }, {
+  performance = { rtp = { reset = false } },
   ui = {
     -- If you are using a Nerd Font: set icons to an empty table which will use the
     -- default lazy.nvim defined Nerd Font icons, otherwise define a unicode icons table
