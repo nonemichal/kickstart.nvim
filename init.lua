@@ -713,9 +713,8 @@ require('lazy').setup({
       --
       -- You can add other tools here that you want Mason to install
       -- for you, so that they are available from within Neovim.
-      -- local ensure_installed = require 'custom.plugins.ensure-installed'
-      local ensure_installed = {}
-      require('mason-tool-installer').setup { ensure_installed = ensure_installed, run_on_start = false }
+      local ensure_installed = require 'custom.plugins.ensure-installed'
+      require('mason-tool-installer').setup { ensure_installed = ensure_installed, run_on_start = true }
 
       require('mason-lspconfig').setup {
         ensure_installed = {}, -- explicitly set to an empty table (Kickstart populates installs via mason-tool-installer)

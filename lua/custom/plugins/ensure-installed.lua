@@ -85,4 +85,6 @@ for name, _ in pairs(daps) do
   table.insert(ensure_installed, name)
 end
 
-return ensure_installed
+-- Return ensure_installed if you want to download all plugins
+return {}
+-- return ensure_installed
