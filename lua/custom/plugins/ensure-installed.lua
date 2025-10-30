@@ -57,7 +57,7 @@ local linters = {
   'yamllint',
   'qmlls',
 }
-vim.list_extend(servers, linters)
+vim.list_extend(ensure_installed, linters)
 
 local formatters = {
   lua = { 'stylua' },
