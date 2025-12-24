@@ -11,7 +11,7 @@ return {
       bitbake = { 'oelint-adv' },
       c = { 'cpplint' },
       cmake = { 'cmake_lint' },
-      cpp = { 'cpplint', 'cppcheck' },
+      cpp = { 'cpplint' },
       docker = { 'hadolint' },
       fish = { 'fish' },
       git = { 'gitlint' },
