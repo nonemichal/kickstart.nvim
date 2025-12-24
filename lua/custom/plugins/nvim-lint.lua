@@ -9,7 +9,7 @@ return {
       api = { 'api-linter' },
       bash = { 'shellcheck', 'shfmt' },
       bitbake = { 'oelint-adv' },
-      c = { 'cpplint', 'cppcheck' },
+      c = { 'cpplint' },
       cmake = { 'cmake_lint' },
       cpp = { 'cpplint', 'cppcheck' },
       docker = { 'hadolint' },
