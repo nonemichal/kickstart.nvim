@@ -12,6 +12,7 @@ local servers = {
   ['dockerfile-language-server'] = {},
   ['fish-lsp'] = {},
   ['gh-actions-language-server'] = {},
+  glsl_analyzer = {},
   ['html-lsp'] = {},
   ['htmx-lsp'] = {},
   ['json-lsp'] = {},
@@ -19,7 +20,7 @@ local servers = {
   ['lua-language-server'] = {},
   marksman = {},
   ['rust-analyzer'] = {},
-  ['systemd-language-server'] = {},
+  ['systemd-lsp'] = {},
   taplo = {},
   ['typescript-language-server'] = {},
   ['typos-lsp'] = {},
@@ -67,7 +68,9 @@ local formatters = {
   sh = { 'shfmt' },
   wasm = { 'wasm-language-tools' },
   yaml = { 'yamlfmt' },
+  toml = { 'taplo' },
   html = { 'htmlbeautifier' },
+  glsl = { 'glsl_analyzer' },
 }
 for _, tools in pairs(formatters) do
   vim.list_extend(ensure_installed, tools)
